@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  api:
+    build: ./backend/SocietyApi
+    ports:
+      - 8080:80
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=/data/society.db
+      - Jwt__Key=VerySecretKeyChangeThisInProduction
+      - Jwt__Issuer=SocietyApi
+    volumes:
+      - ./data:/data
+  frontend:
+    image: nginx:alpine
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - 8081:80
